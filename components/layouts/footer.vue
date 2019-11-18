@@ -7,12 +7,13 @@
             rel="noopener"
             v-for="(friend,index) in friends"
             :key="index"
-            :href="friend.url" target="_blank">
-              {{ friend.name }}
+            :href="friend.url" target="_blank"
+          >
+            {{ friend.name }}
             <span
               class="hr"
               v-if="index !== friends.length - 1"
-              ></span>
+            />
           </a>
       </ul>
     </div> -->
