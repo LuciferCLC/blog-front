@@ -10,7 +10,7 @@
     </ul>
 
     <h3 class="title sitemap-article">
-      <span class="line"></span>
+      <span class="line" />
     </h3>
     <div class="sitemap-article-list">
       <div v-for="(year, index) in yearList" :key="index" class="year-list">
