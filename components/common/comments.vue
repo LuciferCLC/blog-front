@@ -13,13 +13,13 @@
       </div>
       <span class="line" />
       <!-- <div class="sort">
-        <a href="" 
+        <a href=""
            class="sort-btn"
-           :class="{ actived: Object.is(sortMode, 1) }" 
+           :class="{ actived: Object.is(sortMode, 1) }"
            @click.stop.prevent="sortComemnts(1)">最新</a>
-        <a href="" 
+        <a href=""
            class="sort-btn"
-           :class="{ actived: Object.is(sortMode, 2) }" 
+           :class="{ actived: Object.is(sortMode, 2) }"
            @click.stop.prevent="sortComemnts(2)">最热</a>
       </div> -->
     </div>
@@ -120,9 +120,9 @@
           <div class="name">
             <input
               required
-              type="text" 
+              type="text"
               name="name"
-              placeholder="称呼（必填）" 
+              placeholder="称呼（必填）"
               v-model="user.name"
               maxlength="10"
             />
@@ -132,8 +132,8 @@
               required
               type="email"
               name="email"
-              placeholder="邮箱（必填，不会公开）" 
-              v-model="user.email" 
+              placeholder="邮箱（必填，不会公开）"
+              v-model="user.email"
               @blur="upadteUserGravatar"
               maxlength="40"
             />
@@ -142,7 +142,7 @@
             <input
               type="url"
               name="url"
-              placeholder="网站（http, https:// 开头，非必填）" 
+              placeholder="网站（http, https:// 开头，非必填）"
               v-model="user.site"
               maxlength="40"
             />
@@ -206,7 +206,7 @@
                 >
                     <img
                       :alt="comment.author.name || '匿名用户'"
-                      :src="gravatar(comment.author.email) || '/images/anonymous.jpg'" 
+                      :src="gravatar(comment.author.email) || '/images/anonymous.jpg'"
                       v-if="mobileLayout"
                       width="24px"
                       style="margin-right: 10px;"
@@ -259,11 +259,11 @@
 </template>
 
 <script>
-import markdown from '~/plugins/marked'
 import gravatar from '~/plugins/gravatar'
+import markdown from '~/plugins/marked'
 import { scrollTo } from '~/utils/scroll'
-import loadingCom from '~/components/common/loading/index.vue'
 import _ from '~/utils/underscore'
+import loadingCom from '~/components/common/loading/index'
 
 export default {
   name: 'comment',
@@ -293,7 +293,7 @@ export default {
       likeComments: [],
       regexs: {
         email: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/,
-        url: /^((https|http):\/\/)+[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/
+        url: /^((https|http):\/\/)+[A-Za-z0-9]+\.[A-Za-z0-9]+[/=?%\-&_~`@[\]':+!]*([^<>""])*$/
       }
     }
   },
@@ -307,46 +307,36 @@ export default {
   components: { loadingCom },
 
   computed: {
-
-    comment() {
+    comment () {
       return this.$store.state.comment
     },
-
-    replyCommentSlef() {
+    replyCommentSlef () {
       return this.comment.data.data.find(comment => Object.is(comment.id, this.pid))
     },
-
     mobileLayout () {
       return this.$store.state.options.mobileLayout
     },
-
     haveMore () {
-      return this.$store.state.comment.data.pagination.current_page
-              !== this.$store.state.comment.data.pagination.total_page
+      return this.$store.state.comment.data.pagination.current_page !== this.$store.state.comment.data.pagination.total_page
     }
   },
 
   mounted () {
     this.initUser()
-
     // 移动端直接加载评论
-    if (!!this.mobileLayout) {
+    if (this.mobileLayout) {
       this.loadComemntList({ page_size: 100 })
       return
     }
-
     window.onscroll = _.throttle(() => {
-
       // 总高度
-      let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
-
+      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
       // 滚动距离
-      let scrolleTop = document.documentElement.scrollTop || document.body.scrollTop
-
+      const scrolleTop = document.documentElement.scrollTop || document.body.scrollTop
       // 窗口高度
-      let windowHeight = window.innerHeight
+      const windowHeight = window.innerHeight
 
-      if (scrollHeight -  scrolleTop - windowHeight <= 200) {
+      if (scrollHeight - scrolleTop - windowHeight <= 200) {
         if (!this.comment.data.pagination.total_page && !this.comment.fetching) {
           this.loadComemntList()
         } else if (this.haveMore && !this.comment.fetching) {
@@ -357,37 +347,39 @@ export default {
       }
     }, 400)
   },
-  destroyed() {
+  destroyed () {
     window.onscroll = null
     this.$store.commit('comment/CLEAR_LIST')
   },
   methods: {
-
-    clickOut() {
-      this.activeComment = 0;
+    clickOut () {
+      this.activeComment = 0
     },
-
     // markdown解析服务
-    marked(content) {
+    marked (content) {
       return markdown(content, null, false).html
     },
     // 头像服务
-    gravatar(email) {
-      if (!this.regexs.email.test(email)) return null
-      let gravatar_url = gravatar.url(email, {
-        // size: '96', 
+    gravatar (email) {
+      if (!this.regexs.email.test(email)) {
+        return null
+      }
+      const gravatarUrl = gravatar.url(email, {
+        // size: '96',
         // rating: 'pg',
-        // default: 'https://gravatar.surmon.me/anonymous.jpg', 
+        // default: 'https://gravatar.surmon.me/anonymous.jpg',
         protocol: 'https'
-      });
-      return gravatar_url
+      })
+      return gravatarUrl
     },
     // 初始化本地用户即本地用户的点赞历史
-    initUser() {
+    initUser () {
       if (localStorage) {
         const user = localStorage.getItem('BLOG_USER')
         const likeComments = localStorage.getItem('LIKE_COMMENTS')
-        if (likeComments) this.likeComments = JSON.parse(likeComments)
+        if (likeComments) {
+          this.likeComments = JSON.parse(likeComments)
+        }
         if (user) {
           this.user = JSON.parse(user)
           this.upadteUserGravatar()
@@ -396,31 +388,39 @@ export default {
       }
     },
     // 更新用户数据
-    updateUserCache(event) {
+    updateUserCache (event) {
       event.preventDefault()
-      if (!this.user.name) return alert('名字？')
-      if (!this.user.email) return alert('邮箱？')
-      if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法')
-      if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法')
+      if (!this.user.name) {
+        return alert('名字？')
+      }
+      if (!this.user.email) {
+        return alert('邮箱？')
+      }
+      if (!this.regexs.email.test(this.user.email)) {
+        return alert('邮箱不合法')
+      }
+      if (this.user.site && !this.regexs.url.test(this.user.site)) {
+        return alert('链接不合法')
+      }
       localStorage.setItem('user', JSON.stringify(this.user))
       this.userCacheEditing = false
     },
     // 清空用户数据
-    claerUserCache() {
+    claerUserCache () {
       this.userCacheMode = false
       this.userCacheEditing = false
       localStorage.removeItem('user')
-      Object.keys(this.user).forEach(key => {
+      Object.keys(this.user).forEach((key) => {
         this.user[key] = ''
       })
     },
     // 更新当前用户头像
-    upadteUserGravatar() {
+    upadteUserGravatar () {
       const emailIsVerified = this.regexs.email.test(this.user.email)
       this.user.gravatar = emailIsVerified ? this.gravatar(this.user.email) : null
     },
     // 编辑器相关
-    commentContentChange() {
+    commentContentChange () {
       const html = this.$refs.markdown.innerHTML
       const text = this.$refs.markdown.innerText
       if (!Object.is(html, this.comemntContentHtml)) {
@@ -430,12 +430,14 @@ export default {
         this.comemntContentText = text
       }
     },
-    updateCommentContent({ start = '', end = '' }) {
-      if (!start && !end) return false
+    updateCommentContent ({ start = '', end = '' }) {
+      if (!start && !end) {
+        return false
+      }
       // 如果选中了内容，则把选中的内容替换，否则在光标位置插入新内容
       const selectedText = (window.getSelection || document.getSelection)().toString()
       const currentText = this.$refs.markdown.innerText
-      if (!!selectedText) {
+      if (selectedText) {
         const newText = currentText.replace(selectedText, start + selectedText + end)
         this.$refs.markdown.innerText = newText
       } else {
@@ -444,12 +446,12 @@ export default {
       }
       this.commentContentChange()
     },
-    clearCommentContent(content) {
+    clearCommentContent (content) {
       this.comemntContentHtml = ''
       this.$refs.markdown.innerHTML = this.comemntContentHtml
       this.commentContentChange()
     },
-    insertContent(type) {
+    insertContent (type) {
       const contents = {
         image: {
           start: `![`,
@@ -466,8 +468,7 @@ export default {
       }
       this.updateCommentContent(contents[type])
     },
-
-    insertEmoji(emoji) {
+    insertEmoji (emoji) {
       this.updateCommentContent({ end: emoji })
     },
 
@@ -487,79 +488,73 @@ export default {
         }, 300)
       }
     },
-
     // 点击用户
-    clickUser(event, user) {
+    clickUser (event, user) {
       if (!user.site) event.preventDefault()
     },
-
     // 跳转到某条指定的id位置
-    toSomeAnchorById(id) {
+    toSomeAnchorById (id) {
       const targetDom = document.getElementById(id)
       if (targetDom) {
-        let isToEditor = Object.is(id, 'post-box')
-        let isCommentBox = Object.is(id, 'comment-box')
+        const isToEditor = Object.is(id, 'post-box')
+        const isCommentBox = Object.is(id, 'comment-box')
         scrollTo(targetDom, 500, { offset: isToEditor ? -110 : isCommentBox ? -70 : -300 })
         // 如果是进入编辑模式，则需要激活光标
         if (isToEditor) {
-          let p = this.$refs.markdown
-          let s = window.getSelection()
-          let r = document.createRange()
+          const p = this.$refs.markdown
+          const s = window.getSelection()
+          const r = document.createRange()
           r.setStart(p, p.childElementCount)
           r.setEnd(p, p.childElementCount)
           s.removeAllRanges()
           s.addRange(r)
         } else {
-          this.activeComment = id;
+          this.activeComment = id
         }
-        console.log(this.activeComment);
+        console.log(this.activeComment)
       }
     },
-
     // 回复评论
-    replyComment(comment) {
+    replyComment (comment) {
       this.pid = comment.id
       this.toSomeAnchorById('post-box')
     },
     // 取消回复
-    cancelCommentReply() {
+    cancelCommentReply () {
       this.pid = 0
     },
     // 找到回复来源
-    fondReplyParent(pid) {
+    fondReplyParent (pid) {
       const parent = this.comment.data.data.find(comment => Object.is(comment.id, pid))
       return parent ? parent.author.name : null
     },
-
     // 回复来源内容
     fondReplyParentContent (pid) {
       const parent = this.comment.data.data.find(comment => Object.is(comment.id, pid))
       const content = parent ? parent.content : null
       return this.marked(content)
     },
-
     // 点赞某条评论
-    likeComment(comment) {
+    likeComment (comment) {
       if (this.commentLiked(comment._id)) return false
       this.$store.dispatch('comment/likeComment', { type: 1, _id: comment._id })
-      .then(data => {
-        this.likeComments.push(comment._id)
-        localStorage.setItem('LIKE_COMMENTS', JSON.stringify(this.likeComments))
-      })
-      .catch(err => {
-        console.warn('评论点赞失败', err)
-      })
+        .then((data) => {
+          this.likeComments.push(comment._id)
+          localStorage.setItem('LIKE_COMMENTS', JSON.stringify(this.likeComments))
+        })
+        .catch((err) => {
+          console.warn('评论点赞失败', err)
+        })
     },
     // 获取某条评论是否被点赞
-    commentLiked(comment_id) {
-      return this.likeComments.includes(comment_id)
+    commentLiked (commentId) {
+      return this.likeComments.includes(commentId)
     },
-
     // 获取评论列表
-    async loadComemntList(params = {}) {
+    async loadComemntList (params = {}) {
       // params.sort = this.sortMode
       params.sort = -1
-      const res = await this.$store.dispatch('comment/loadCommentsByPostId', {
+      await this.$store.dispatch('comment/loadCommentsByPostId', {
         ...params,
         post_id: this.postId
       })
@@ -573,17 +568,17 @@ export default {
     // },
 
     // 提交评论
-    async submitComment(event) {
+    async submitComment (event) {
       // 为了使用原生表单拦截，不使用事件修饰符
       event.preventDefault()
       if (!this.user.name) return alert('名字？')
       if (!this.user.email) return alert('邮箱？')
       if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法')
       if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法')
-      if(!this.comemntContentText || !this.comemntContentText.replace(/\s/g, '')) return alert('内容？')
+      if (!this.comemntContentText || !this.comemntContentText.replace(/\s/g, '')) return alert('内容？')
       const lineOverflow = this.comemntContentText.split('\n').length > 36
       const lengthOverflow = this.comemntContentText.length > 1000
-      if(lineOverflow || lengthOverflow) return alert('内容需要在1000字/36行以内')
+      if (lineOverflow || lengthOverflow) return alert('内容需要在1000字/36行以内')
 
       if (!this.user.site) delete this.user.site
       const res = await this.$store.dispatch('comment/postComment', {
@@ -1072,7 +1067,6 @@ export default {
             border-radius: 4px;
             &:hover {
               border-color: $form-hover;
-              
             }
             &:focus {
               border-color: $black;
