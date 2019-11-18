@@ -46,9 +46,9 @@ export default {
     return {
       nav: [
         // { path: '/', name: '首 页', icon: 'iconfont icon-home'},
-        { path: '/code', name: '码 农', icon: 'iconfont icon-home'},
-        { path: '/think', name: '读 书', icon: 'iconfont icon-read'},
-        { path: '/fuck', name: '民 谣', icon: 'iconfont icon-read'}
+        { path: '/code', name: '码 农', icon: 'iconfont icon-home' },
+        { path: '/think', name: '读 书', icon: 'iconfont icon-read' },
+        { path: '/fuck', name: '民 谣', icon: 'iconfont icon-read' }
       ],
       theme: 'light'
     }

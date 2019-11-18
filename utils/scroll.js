@@ -65,10 +65,9 @@ export const scrollTo = (element, duration = 500, options) => {
     elementY = initialY + element.getBoundingClientRect().top
   }
 
-  let targetY =
-    document.body.scrollHeight - elementY < window.innerHeight
-      ? document.body.scrollHeight - window.innerHeight
-      : elementY
+  let targetY = document.body.scrollHeight - elementY < window.innerHeight
+    ? document.body.scrollHeight - window.innerHeight
+    : elementY
 
   if (options.offset) {
     targetY += options.offset

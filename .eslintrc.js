@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     'nuxt/no-cjs-in-config': 'off',
     'curly': ['error', 'multi-line'],
-    'unicorn/prefer-text-content': 'off'
+    'unicorn/prefer-text-content': 'off',
+    'operator-linebreak': ['error', 'before']
   }
 }

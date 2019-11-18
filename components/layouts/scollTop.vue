@@ -1,12 +1,12 @@
 <template>
-  <transition-group 
+  <transition-group
     tag="div"
     name="fade"
     class="scoll-aside"
     :class="{ mobile: mobileLayout }"
   >
     <!-- v-if="$route.path !== '/'" -->
-    <a 
+    <a
       href="javascript:;"
       @click="toogleTheme"
       class="scoll-btn theme"
@@ -49,7 +49,7 @@ export default {
       let timer = null
       cancelAnimationFrame(timer)
       timer = requestAnimationFrame(function fn () {
-        let oTop = document.body.scrollTop || document.documentElement.scrollTop
+        const oTop = document.body.scrollTop || document.documentElement.scrollTop
         if (oTop > 0) {
           document.body.scrollTop = document.documentElement.scrollTop = oTop - 150
           timer = requestAnimationFrame(fn)
@@ -83,7 +83,7 @@ export default {
     }
     // 浏览器视口的高度
     function getWindowHeight () {
-      let windowHeight = window.innerWidth
+      const windowHeight = window.innerWidth
       return windowHeight
     }
     window.addEventListener('scroll', () => {

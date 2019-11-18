@@ -49,14 +49,14 @@ export default {
   },
 
   watch: {
-    '$route'(newVel, oldVel) {
+    '$route' (newVel, oldVel) {
       this.search = false
       this.toggleSidebar(false)
     }
   },
 
   computed: {
-    mobileSidebar() {
+    mobileSidebar () {
       return this.$store.state.options.mobileSidebar
     }
   },

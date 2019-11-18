@@ -6,10 +6,10 @@
           <a
             rel="noopener"
             v-for="(friend,index) in friends"
-            :key="index" 
+            :key="index"
             :href="friend.url" target="_blank">
               {{ friend.name }}
-            <span 
+            <span
               class="hr"
               v-if="index !== friends.length - 1"
               ></span>
@@ -94,4 +94,3 @@ footer {
   }
 }
 </style>
-

@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import EventBus from '~/utils/event-bus'
+// import EventBus from '~/utils/event-bus'
 import _ from '~/utils/underscore'
 
 export default {
@@ -77,12 +77,12 @@ export default {
             { path: '/', name: '全部' },
             { path: '/code', name: '码农' },
             { path: '/fuck', name: '民谣' },
-            { path: '/think', name: '读书' },
+            { path: '/think', name: '读书' }
           ]
         },
         // { path: '/', name: '文章', icon: 'iconfont icon-read'},
-        { path: '/about', name: '关于我', icon: 'iconfont icon-read'},
-        { path: '/wall', name: '留言墙', icon: 'iconfont icon-read'}
+        { path: '/about', name: '关于我', icon: 'iconfont icon-read' },
+        { path: '/wall', name: '留言墙', icon: 'iconfont icon-read' }
       ]
     }
   },
@@ -123,22 +123,22 @@ export default {
       this.open = false
       this.keyword = ''
     },
-    togglePlay() {
+    togglePlay () {
       if (this.playerState.ready) {
         this.player.togglePlay()
       }
     },
-    toggleMuted() {
+    toggleMuted () {
       if (this.playerState.ready) {
         this.player.toggleMuted()
       }
     },
-    prevSong() {
+    prevSong () {
       if (this.playerState.ready) {
         this.player.prevSong()
       }
     },
-    nextSong() {
+    nextSong () {
       if (this.playerState.ready) {
         this.player.nextSong()
       }
@@ -158,7 +158,7 @@ export default {
             || window.scrollY
             || document.body.scrollTop
           const delta = afterScrollTop - beforeScrollTop
-          if (delta === 0 ) return false
+          if (delta === 0) return false
           delta > 0 ? el.classList.add('fixed') : el.classList.remove('fixed')
           setTimeout(() => {
             beforeScrollTop = afterScrollTop
@@ -300,7 +300,7 @@ header {
         height: 2px;
         background-color: $black;
         border-radius: 1px;
-        @include def;        
+        @include def;
         @include transition(width .15s ease .45s);
         @include transform(rotate(45deg));
         @include transform-origin(top left);
@@ -324,7 +324,7 @@ header {
         z-index: 20;
         width: 16px;
         height: 16px;
-        cursor: pointer;	
+        cursor: pointer;
         @include transform(translateY(-50%));
         &:before, &:after {
           @include def;
@@ -361,8 +361,8 @@ header {
     }
     >input {
       position: absolute;
-      padding: .5rem 2.5rem .5rem .5rem; 
-      line-height: 1rem;     
+      padding: .5rem 2.5rem .5rem .5rem;
+      line-height: 1rem;
       // background: $light-dark;
       opacity: 1;
       @include transition-delay(.05s);
