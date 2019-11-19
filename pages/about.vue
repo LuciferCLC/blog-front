@@ -59,7 +59,7 @@
           <p>All of me in the code and music</p>
         </div>
         <div class="right">
-          <p>联系我</p>
+          <!-- <p>联系我</p> -->
           <!-- <img src="~/static/images/contact.png" alt="" width="120"> -->
         </div>
       </div>

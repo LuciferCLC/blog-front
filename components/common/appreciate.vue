@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="title more tools" :class="{'title-mobile': mobileLayout}">
-      <span class="title-name name">赞赏支持</span>
+      <span class="title-name name">Buy Me A Coffee</span>
       <span class="line" />
     </p>
     <div class="appreciate">
