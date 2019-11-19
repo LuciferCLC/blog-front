@@ -60,7 +60,7 @@ const imageParse = (src, title, alt) => {
           <div class="progress-image-fill"></div>
           <img
             src="${src}"
-            title="${title || alt || 'jkchao.cn'}"
+            title="${title || alt || 'nolan.cc'}"
             class="image-original"
             onload="if (window.loadedSmallImg) window.loadedSmallImg(this)"/>
         </div>
@@ -75,7 +75,7 @@ const imageParse = (src, title, alt) => {
         <div class="progress-image-fill"></div>
         <img
           src="${src}?imageMogr2/auto-orient/thumbnail/630x/blur/1x0/quality/1|imageslim"
-          title="${title || alt || 'jkchao.cn'}"
+          title="${title || alt || 'nolan.cc'}"
           class="img-pop image-small"
           onload="if (window.loadedSmallImg) window.loadedSmallImg(this)"/>
         <img
@@ -95,7 +95,7 @@ const imageParse = (src, title, alt) => {
 // const commentImageParse = (src, title, alt) => {
 //   return `<img
 //             src="${src}"
-//             title="${title || alt || 'jkchao.cn'}"
+//             title="${title || alt || 'nolan.cc'}"
 //             data-src="${src}"
 //             class="img-pop"/>
 //           <div class="img-caption">${title || alt || ''}</div>

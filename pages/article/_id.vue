@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="share">
-        <share class="article-share" />
+        <!-- <share class="article-share" /> -->
       </div>
     </div>
     <appreciate :mobileLayout="mobileLayout" class="item appreciate-list" />
@@ -64,7 +64,7 @@
             <time>
               {{ item.create_at | dateFormat('yyyy-MM-dd') }}
             </time>
-            <a :href="`https://jkchao.cn/article/${item._id}`" target="_blank">
+            <a :href="`https://nolan.cc/article/${item._id}`" target="_blank">
               {{ item.title }}
             </a>
           </div>
@@ -113,7 +113,7 @@
 
 <script>
 import markdown from '~/plugins/marked'
-import share from '~/components/layouts/share'
+// import share from '~/components/layouts/share'
 import dialogCom from '~/components/common/dialog'
 import comments from '~/components/common/comments'
 import progressiveImage from '~/components/common/progressiveImage'
@@ -145,7 +145,13 @@ export default {
     }
   },
 
-  components: { share, dialogCom, comments, progressiveImage, appreciate },
+  components: {
+    // share,
+    dialogCom,
+    comments,
+    progressiveImage,
+    appreciate
+  },
 
   computed: {
     mobileLayout () {

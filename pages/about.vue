@@ -27,7 +27,7 @@
         <div class="list">
           <i class="iconfont icon-comments" />
           <span class="list-content icons">
-            <a href="https://github.com/jkchao" target="_blank"><i class="iconfont icon-github"></i></a>
+            <a href="https://github.com/luciferclc" target="_blank"><i class="iconfont icon-github"></i></a>
             <!-- <a href="https://juejin.im/user/5858c896128fe1006b86cb51" target="_blank"><i class="iconfont icon-juejin"></i></a> -->
             <!-- <a href="https://weibo.com/5329847417/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank"><i class="iconfont icon-weibo"></i></a> -->
             <!-- <a href="" target="_blank"><i class="iconfont icon-twitter"></i></a> -->
@@ -88,7 +88,7 @@
       <p>你可以在下面申请友请链接，称呼 + 网址 。</p>
       <p>哦，对了，可以看看这篇文章
         <i>
-          <!-- <a href="https://jkchao.cn/article/5a03f6ec0a7b41779c672afa" target="_blank">来，喝酒吧！</a> -->
+          <!-- <a href="https://nolan.cc/article/5a03f6ec0a7b41779c672afa" target="_blank">来，喝酒吧！</a> -->
         </i>
         这都是我乱说的。
       </p>
