@@ -6,11 +6,11 @@
     </p>
     <div class="appreciate">
       <div class="appreciate-item">
-        <!-- <img src="~/static/images/wechat.jpg" alt="" :width="mobileLayout ? 160 : 200"> -->
+        <img src="~/static/images/wechat.jpeg" alt="" :width="mobileLayout ? 160 : 200">
         <p>微信</p>
       </div>
       <div class="appreciate-item">
-        <!-- <img src="~/static/images/zhifubao.jpg" alt="" :width="mobileLayout ? 160 : 200"> -->
+        <img src="~/static/images/zhifubao.jpeg" alt="" :width="mobileLayout ? 160 : 200">
         <p>支付宝</p>
       </div>
     </div>
