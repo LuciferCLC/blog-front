@@ -86,12 +86,12 @@
     </p>
     <div class="last">
       <p>你可以在下面申请友请链接，称呼 + 网址 。</p>
-      <p>哦，对了，可以看看这篇文章
+      <!-- <p>哦，对了，可以看看这篇文章
         <i>
-          <!-- <a href="https://nolan.cc/article/5a03f6ec0a7b41779c672afa" target="_blank">来，喝酒吧！</a> -->
+          <a href="http://nolan.cc/article/5a03f6ec0a7b41779c672afa" target="_blank">来，喝酒吧！</a>
         </i>
         这都是我乱说的。
-      </p>
+      </p> -->
     </div>
     <div class="comment">
       <comments :post-id="0" />

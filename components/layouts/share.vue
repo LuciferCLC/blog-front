@@ -50,7 +50,7 @@ export default {
 
   computed: {
     url () {
-      return `https://nolan.cc${this.$route.fullPath}`
+      return `http://nolan.cc${this.$route.fullPath}`
     },
     mobileLayout () {
       return this.$store.state.options.mobileLayout

@@ -64,7 +64,7 @@
             <time>
               {{ item.create_at | dateFormat('yyyy-MM-dd') }}
             </time>
-            <a :href="`https://nolan.cc/article/${item._id}`" target="_blank">
+            <a :href="`http://nolan.cc/article/${item._id}`" target="_blank">
               {{ item.title }}
             </a>
           </div>

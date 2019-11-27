@@ -57,7 +57,7 @@ export default {
         : `${this.thumb}?imageView2/1/w/630/h/300/format/webp/q/1|imageslim`
     },
     isCDN () {
-      return this.thumb.includes('https://static.nolan.cc')
+      return this.thumb.includes('http://static.nolan.cc')
     }
   },
 
