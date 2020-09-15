@@ -1,14 +1,13 @@
 /*
-*
-* 一些无法适用于 store 的数据状态
-*
-*/
+ *
+ * 一些无法适用于 store 的数据状态
+ *
+ */
 
-import Vue from 'vue'
-import musicPlayerBuilder from '~/utils/music-player'
-
+import Vue from 'vue';
+import musicPlayerBuilder from '~/utils/music-player';
 export default new Vue({
-  data () {
+  data() {
     return {
       player: {
         playerState: {
@@ -36,46 +35,50 @@ export default new Vue({
           data: null
         }
       }
-    }
+    };
   },
-
   computed: {
-    currentSong () {
+    currentSong() {
       if (this.player.list.data) {
-        return this.player.list.data.tracks[this.player.playerState.index]
+        return this.player.list.data.tracks[this.player.playerState.index];
       } else {
-        return null
+        return null;
       }
     }
   },
-
   methods: {
-    INIT_PLAYER () {
-      const player = this.player
-      musicPlayerBuilder(player)
+    INIT_PLAYER() {
+      const player = this.player;
+      musicPlayerBuilder(player);
     },
-    REQUEST_LIST () {
-      this.player.list.fetching = true
+
+    REQUEST_LIST() {
+      this.player.list.fetching = true;
     },
-    GET_LIST_FAILURE () {
-      this.player.list.fetching = false
-      this.player.list.data = null
+
+    GET_LIST_FAILURE() {
+      this.player.list.fetching = false;
+      this.player.list.data = null;
     },
-    GET_LIST_SUCCESS (action) {
-      this.player.list.fetching = false
-      this.player.list.data = action.result
+
+    GET_LIST_SUCCESS(action) {
+      this.player.list.fetching = false;
+      this.player.list.data = action.result;
     },
-    REQUEST_SONG () {
-      this.player.song.fetching = true
+
+    REQUEST_SONG() {
+      this.player.song.fetching = true;
     },
-    GET_SONG_FAILURE () {
-      this.player.song.data = null
-      this.player.song.fetching = false
+
+    GET_SONG_FAILURE() {
+      this.player.song.data = null;
+      this.player.song.fetching = false;
     },
-    GET_SONG_SUCCESS (action) {
-      console.log(action)
-      this.player.song.data = action.result
-      this.player.song.fetching = false
+
+    GET_SONG_SUCCESS(action) {
+      console.log(action);
+      this.player.song.data = action.result;
+      this.player.song.fetching = false;
     }
   }
-})
+});

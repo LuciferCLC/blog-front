@@ -1,3 +1,3 @@
-import howler from 'howler'
+import howler from 'howler';
 
-export default howler
+export default howler;

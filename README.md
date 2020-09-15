@@ -1,10 +1,8 @@
-# nolan-blog
-
-> My astounding Nuxt.js project
+# new-front
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ yarn install
 

@@ -7,7 +7,7 @@
       alt=""
       :class="{
         'img-placeholder': true,
-        'loaded': loadingLarge
+        loaded: loadingLarge
       }"
       crossorigin="anonymous"
       @load="loadingLarge = true"
@@ -22,51 +22,52 @@
       }"
       @load="handleLoadLarge"
     />
-    <div style="padding-bottom: 47.61%" />
+    <div style="padding-bottom: 47.61%"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'progressiveImage',
-
+  name: 'ProgressiveImage',
   props: ['thumb'],
-
-  data () {
+  data() {
     return {
       loadingLarge: false,
       loadedLarge: false,
       loadedSmall: false
-    }
+    };
   },
 
   computed: {
-    mobileLayout () {
-      return this.$store.state.options.mobileLayout
+    mobileLayout() {
+      return this.$store.state.options.mobileLayout;
     },
-    largeThumb () {
+
+    largeThumb() {
       // 如果不是放在七牛上，则是外链图片，不需要渐进式加载
-      if (!this.isCDN) return this.thumb
+      if (!this.isCDN) return this.thumb;
       return this.mobileLayout
         ? `${this.thumb}?imageView2/1/w/350/h/170/format/webp/q/75|imageslim`
-        : `${this.thumb}?imageView2/1/w/630/h/300/format/webp/q/75|imageslim`
+        : `${this.thumb}?imageView2/1/w/630/h/300/format/webp/q/75|imageslim`;
     },
-    smallThumb () {
+
+    smallThumb() {
       return this.mobileLayout
         ? `${this.thumb}?imageView2/1/w/350/h/170/format/webp/q/1|imageslim`
-        : `${this.thumb}?imageView2/1/w/630/h/300/format/webp/q/1|imageslim`
+        : `${this.thumb}?imageView2/1/w/630/h/300/format/webp/q/1|imageslim`;
     },
-    isCDN () {
-      return this.thumb.includes('http://static.nolan.cc')
+
+    isCDN() {
+      return this.thumb.includes('https://static.jkchao.cn');
     }
   },
 
   watch: {
     isCDN: {
-      handler (val) {
-        // console.log(val)
+      handler(val) {
+        // console.log(val);
         if (!val) {
-          this.loadingLarge = true
+          this.loadingLarge = true;
         }
       },
       immediate: true
@@ -74,13 +75,13 @@ export default {
   },
 
   methods: {
-    handleLoadLarge () {
+    handleLoadLarge() {
       setTimeout(() => {
-        this.loadedLarge = true
-      }, 200)
+        this.loadedLarge = true;
+      }, 200);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -92,10 +93,12 @@ export default {
   overflow: hidden;
   margin: $lg-pad 0;
   // padding-top: 47%;
+
   .img-placeholder {
     filter: blur(8px);
     transform: scale(1);
   }
+
   img {
     position: absolute;
     opacity: 0;
@@ -103,6 +106,7 @@ export default {
     left: 0;
     width: 100%;
     transition: opacity 1s linear;
+
     &.loaded {
       opacity: 1;
     }

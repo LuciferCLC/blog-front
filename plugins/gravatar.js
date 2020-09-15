@@ -1,3 +1,3 @@
-import gravatar from 'gravatar'
+import gravatar from 'gravatar';
 
-export default gravatar
+export default gravatar;

@@ -1,70 +1,65 @@
 <template>
   <div class="app">
     <div
-      class="app-aside"
       v-if="mobileLayout"
-      :class="{ open: mobileSidebar }"
       v-click-outside="hideSide"
+      class="app-aside"
+      :class="{ open: mobileSidebar }"
     >
-      <mobile-side />
+      <mobile-side></mobile-side>
     </div>
     <div class="app-main" :class="{ open: mobileSidebar }">
       <transition name="fade" mode="">
-        <div class="head-box" v-if="!isWelcome">
-          <mobile-header v-if="mobileLayout" />
-          <my-header v-else />
+        <div v-if="!isWelcome" class="head-box">
+          <mobile-header v-if="mobileLayout"></mobile-header>
+          <my-header v-else></my-header>
         </div>
       </transition>
+
       <transition-group
         tag="div"
         class="container clearfix main-container"
         name="slide-up"
-        :class="{ 'mobile': mobileLayout }"
+        :class="{ mobile: mobileLayout }"
       >
         <div
-          class="content-left"
           key="1"
+          class="content-left"
           :class="{
             'full-page': !isAsdiePage,
             'mobile-layout': mobileLayout
           }"
         >
-          <nuxt />
+          <nuxt></nuxt>
         </div>
         <!-- <div
-        class="content-right"
-        v-if="isAsdiePage && !mobileLayout && $route.name !== 'index'"
+        class="content-right" 
+        v-if="isAsdiePage && !mobileLayout && $route.name !== 'index'" 
         key="2">
           <keep-alive>
-            <asideView />
+            <asideView></asideView>
           </keep-alive>
         </div> -->
       </transition-group>
+
       <transition name="fade" mode="">
-        <my-footer v-if="!isError && !isWelcome" />
+        <my-footer v-if="!isError && !isWelcome"></my-footer>
       </transition>
     </div>
-    <scoll-top />
+    <scoll-top></scoll-top>
   </div>
 </template>
 
 <script>
-import myFooter from '~/components/layouts/footer'
-import myHeader from '~/components/layouts/header'
-// import asideView from '~/components/layouts/aside'
-import scollTop from '~/components/layouts/scollTop'
-import mobileSide from '~/components/mobile/aside'
-import mobileHeader from '~/components/mobile/header'
+import myFooter from '~/components/layouts/footer';
+import myHeader from '~/components/layouts/header';
+// import asideView from '~/components/layouts/aside';
+import scollTop from '~/components/layouts/scollTop';
+
+import mobileSide from '~/components/mobile/aside';
+import mobileHeader from '~/components/mobile/header';
 
 export default {
-  head () {
-    return !this.mobileLayout ? {} : {
-      bodyAttrs: {
-        class: 'mobile'
-      }
-    }
-  },
-
   components: {
     mobileHeader,
     myFooter,
@@ -75,43 +70,57 @@ export default {
   },
 
   computed: {
-    isAsdiePage () {
-      return this.$store.state.options.isAsidePage
+    isAsdiePage() {
+      return this.$store.state.options.isAsidePage;
     },
-    isWelcome () {
-      return false
+
+    isWelcome() {
+      return false;
       // return this.$store.state.options.isWelcome
     },
-    mobileLayout () {
-      return this.$store.state.options.mobileLayout
+
+    mobileLayout() {
+      return this.$store.state.options.mobileLayout;
     },
-    mobileSidebar () {
-      return this.$store.state.options.mobileSidebar
+
+    mobileSidebar() {
+      return this.$store.state.options.mobileSidebar;
     },
-    isError () {
-      return this.$store.state.options.isError
+
+    isError() {
+      return this.$store.state.options.isError;
     },
-    pageLoading () {
-      return this.$store.state.options.pageLoading
+
+    pageLoading() {
+      return this.$store.state.options.pageLoading;
     }
+  },
+
+  mounted() {
+    const theme = window.localStorage.getItem('THEME') || 'dark';
+    document.body.id = theme;
   },
 
   methods: {
-    hideSide () {
-      this.$store.commit('options/SET_MOBILE_SIDEBAR', false)
+    hideSide() {
+      this.$store.commit('options/SET_MOBILE_SIDEBAR', false);
     }
   },
-
-  mounted () {
-    const theme = window.localStorage.getItem('THEME') || 'dark'
-    document.body.id = theme
+  head() {
+    return !this.mobileLayout
+      ? {}
+      : {
+          bodyAttrs: {
+            class: 'mobile'
+          }
+        };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .app {
-  >.app-aside {
+  > .app-aside {
     position: fixed;
     top: 0;
     left: 0;
@@ -120,31 +129,38 @@ export default {
     width: 60%;
     background: $white;
     @include css3-prefix('transform', 'translateX(-100%)');
-    @include transition(all .3s ease-out);
-    >.mobile-aside {
+    @include transition(all 0.3s ease-out);
+
+    > .mobile-aside {
       opacity: 0;
-      @include transition(all .3s ease-out);
+      @include transition(all 0.3s ease-out);
       @include css3-prefix('transform', 'scale(.8)');
     }
   }
-  >.app-aside.open {
+
+  > .app-aside.open {
     @include css3-prefix('transform', 'translateX(0)');
-    >.mobile-aside {
+
+    > .mobile-aside {
       opacity: 1;
       @include css3-prefix('transform', 'scale(1)');
     }
   }
-  >.app-main {
-    @include transition(all .3s ease-out);
-    >.main-container {
+
+  > .app-main {
+    @include transition(all 0.3s ease-out);
+
+    > .main-container {
       min-height: calc(100vh - 196px);
       margin-top: $normal-pad;
     }
-    >.main-container.mobile {
+
+    > .main-container.mobile {
       min-height: calc(100vh - 56px);
     }
   }
-  >.app-main.open {
+
+  > .app-main.open {
     transform: translateX(60%);
   }
 }
@@ -153,13 +169,13 @@ export default {
   position: relative;
   width: $container-left;
   float: left;
-  @include css3-prefix(transition, all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0));
+  @include css3-prefix(transition, all 0.3s cubic-bezier(1, 0.5, 0.8, 1));
 }
 
 .content-left.full-page,
 .content-left.mobile-layout {
   width: 100%;
-  @include css3-prefix(transition, width .5s cubic-bezier(1.0, 0.5, 0.8, 1.0));
+  @include css3-prefix(transition, width 0.5s cubic-bezier(1, 0.5, 0.8, 1));
 }
 
 .content-left.mobile-layout {

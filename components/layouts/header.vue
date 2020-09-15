@@ -4,52 +4,51 @@
       <div class="header-left">
         <div class="logo">
           <nuxt-link to="/">
-            <img src="~/static/images/logo.png" alt="" width="36">
+            <img src="~/static/images/logo.png" alt="" width="36" />
           </nuxt-link>
         </div>
         <nav>
-          <div
-            class="nav-item"
-            v-for="(list, index) in nav"
-            :key="index"
-          >
+          <div v-for="(list, index) in nav" :key="index" class="nav-item">
             <nuxt-link :to="list.path" exact>
               {{ list.name }}
             </nuxt-link>
             <div class="sub-nav">
               <template v-if="list.children">
                 <nuxt-link
-                  class="sub-nav-item"
                   v-for="child in list.children"
                   :key="child.path"
+                  class="sub-nav-item"
                   :to="child.path"
                   exact
                   tag="div"
                 >
-                  <span>{{ child.name }}</span>
+                  <span>
+                    {{ child.name }}
+                  </span>
                 </nuxt-link>
               </template>
             </div>
           </div>
         </nav>
       </div>
+
       <div class="header-right">
         <div
+          key="1"
+          v-click-outside="hide"
           class="search-box"
           @click="open = true"
-          v-click-outside="hide"
-          key="1"
         >
-          <div class="search" :class="{'open': open}">
+          <div class="search" :class="{ open: open }">
             <input
-              type="text"
-              v-model="keyword"
-              placeholder="search..."
               ref="search"
-              @keyup.enter="search"
+              v-model="keyword"
+              type="text"
+              placeholder="search..."
               :maxlength="10"
+              @keyup.enter="search"
             />
-            <div class="eks" @click.stop="search" />
+            <div class="eks" @click.stop="search"></div>
           </div>
         </div>
       </div>
@@ -58,13 +57,44 @@
 </template>
 
 <script>
-// import EventBus from '~/utils/event-bus'
-import _ from '~/utils/underscore'
-
+// import EventBus from '~/utils/event-bus';
+import _ from '~/utils/underscore';
 export default {
   name: 'Mheader',
 
-  data () {
+  directives: {
+    fix: {
+      inserted(el) {
+        let beforeScrollTop =
+          document.documentElement.scrollTop ||
+          window.pageYOffset ||
+          window.scrollY ||
+          document.body.scrollTop;
+        window.addEventListener(
+          'scroll',
+          _.throttle(() => {
+            const afterScrollTop =
+              document.documentElement.scrollTop ||
+              window.pageYOffset ||
+              window.scrollY ||
+              document.body.scrollTop;
+            const delta = afterScrollTop - beforeScrollTop;
+            if (delta === 0) return false;
+            delta > 0
+              ? el.classList.add('fixed')
+              : el.classList.remove('fixed');
+            setTimeout(() => {
+              beforeScrollTop = afterScrollTop;
+            }, 0);
+          }, 200)
+        );
+      },
+      unbind() {
+        window.onscroll = null;
+      }
+    }
+  },
+  data() {
     return {
       keyword: '',
       open: false,
@@ -84,7 +114,7 @@ export default {
         { path: '/about', name: '关于我', icon: 'iconfont icon-read' },
         { path: '/wall', name: '留言墙', icon: 'iconfont icon-read' }
       ]
-    }
+    };
   },
 
   computed: {
@@ -103,75 +133,14 @@ export default {
   },
 
   watch: {
-    open (val) {
+    open(val) {
       if (val) {
-        this.$refs.search.focus()
+        this.$refs.search.focus();
       }
     }
   },
 
-  methods: {
-    hide () {
-      this.open = false
-    },
-    search () {
-      if (!this.open) {
-        this.open = true
-        return
-      }
-      this.$router.push(`/search/${this.keyword}`)
-      this.open = false
-      this.keyword = ''
-    },
-    togglePlay () {
-      if (this.playerState.ready) {
-        this.player.togglePlay()
-      }
-    },
-    toggleMuted () {
-      if (this.playerState.ready) {
-        this.player.toggleMuted()
-      }
-    },
-    prevSong () {
-      if (this.playerState.ready) {
-        this.player.prevSong()
-      }
-    },
-    nextSong () {
-      if (this.playerState.ready) {
-        this.player.nextSong()
-      }
-    }
-  },
-
-  directives: {
-    fix: {
-      inserted (el) {
-        let beforeScrollTop = document.documentElement.scrollTop
-          || window.pageYOffset
-          || window.scrollY
-          || document.body.scrollTop
-        window.addEventListener('scroll', _.throttle(() => {
-          const afterScrollTop = document.documentElement.scrollTop
-            || window.pageYOffset
-            || window.scrollY
-            || document.body.scrollTop
-          const delta = afterScrollTop - beforeScrollTop
-          if (delta === 0) return false
-          delta > 0 ? el.classList.add('fixed') : el.classList.remove('fixed')
-          setTimeout(() => {
-            beforeScrollTop = afterScrollTop
-          }, 0)
-        }, 200))
-      },
-      unbind () {
-        window.onscroll = null
-      }
-    }
-  },
-
-  mounted () {
+  mounted() {
     if (process.browser) {
       // const self = this
       // const player = EventBus.player
@@ -188,8 +157,45 @@ export default {
       //   }, 1666)
       // })
     }
+  },
+
+  methods: {
+    hide() {
+      this.open = false;
+    },
+
+    search() {
+      if (!this.open) {
+        this.open = true;
+        return;
+      }
+      this.$router.push(`/search/${this.keyword}`);
+      this.open = false;
+      this.keyword = '';
+    },
+
+    togglePlay() {
+      if (this.playerState.ready) {
+        this.player.togglePlay();
+      }
+    },
+    toggleMuted() {
+      if (this.playerState.ready) {
+        this.player.toggleMuted();
+      }
+    },
+    prevSong() {
+      if (this.playerState.ready) {
+        this.player.prevSong();
+      }
+    },
+    nextSong() {
+      if (this.playerState.ready) {
+        this.player.nextSong();
+      }
+    }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -201,16 +207,20 @@ header {
   height: $header-height;
   background: $white;
   transform: translateY(0);
+
   &:hover {
     background: $white;
   }
+
   &.fixed {
     transform: translateY(-100%);
   }
+
   &.darken {
-    @include box-shadow(0, 1px, 2px, rgba(0,0,0,.05));
+    @include box-shadow(0, 1px, 2px, rgba(0, 0, 0, 0.05));
   }
-  >.header {
+
+  > .header {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -219,17 +229,21 @@ header {
     height: $header-height;
     padding: 0 $lg-pad;
     line-height: $header-height;
-    >.header-left {
+
+    > .header-left {
       display: flex;
-      >.logo{
+
+      > .logo {
         position: absolute;
         left: 50%;
         height: $header-height;
         line-height: $header-height;
         @include transform(translateX(-50%));
+
         a {
           color: $black;
           font-size: 2rem;
+
           img {
             vertical-align: text-bottom;
           }
@@ -237,62 +251,75 @@ header {
       }
     }
   }
+
   nav {
     display: flex;
-    >div.nav-item {
+
+    > div.nav-item {
       position: relative;
       padding: 0 1.5rem;
       color: $disabled;
-      >i {
-        margin-right: .5rem;
+
+      > i {
+        margin-right: 0.5rem;
       }
+
       a:hover {
         color: $black;
       }
+
       &:hover {
         > .sub-nav {
           display: block;
         }
       }
+
       .sub-nav {
         display: none;
         position: absolute;
         top: $header-height;
         width: 100%;
         cursor: pointer;
+
         .sub-nav-item {
-          padding-left: .8rem;
+          padding-left: 0.8rem;
           background: $code-bg;
+
           &:hover {
             background: $module-hover-bg-light-3;
           }
         }
       }
     }
+
     a.link-active {
       color: $black;
     }
   }
+
   .header-right {
     width: 200px;
   }
+
   .search-box {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: .5rem;
+    padding: 0.5rem;
     width: 100%;
     height: 40px;
     cursor: pointer;
-    @include transform(translate3d(0,0,0));
-    >.search {
+    @include transform(translate3d(0, 0, 0));
+
+    > .search {
       position: relative;
       width: 1rem;
       height: 1rem;
       border: 2px solid $black;
-      @include transition (all .3s ease .15s);
-      @include border-radius(.9rem);
+      @include transition(all 0.3s ease 0.15s);
+      @include border-radius(0.9rem);
       cursor: pointer;
+
       &::after {
         top: 90%;
         left: 100%;
@@ -301,11 +328,12 @@ header {
         background-color: $black;
         border-radius: 1px;
         @include def;
-        @include transition(width .15s ease .45s);
+        @include transition(width 0.15s ease 0.45s);
         @include transform(rotate(45deg));
         @include transform-origin(top left);
       }
-      >input {
+
+      > input {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -314,9 +342,10 @@ header {
         opacity: 0;
         background-color: transparent;
         color: $text;
-        @include transition(opacity .15s ease);
+        @include transition(opacity 0.15s ease);
       }
-      >.eks {
+
+      > .eks {
         display: block;
         position: absolute;
         top: 50%;
@@ -326,21 +355,25 @@ header {
         height: 16px;
         cursor: pointer;
         @include transform(translateY(-50%));
-        &:before, &:after {
+
+        &:before,
+        &:after {
           @include def;
           right: 1px;
           height: 2px;
           width: 0px;
           border-radius: 1px;
-          @include transition(all .25s ease);
+          @include transition(all 0.25s ease);
         }
+
         &:before {
           top: 0px;
           background-color: $black;
           @include transform(rotate(-45deg));
           @include transform-origin(top right);
-          @include transition-delay(.1s);
+          @include transition-delay(0.1s);
         }
+
         &:after {
           bottom: 0px;
           background-color: $black;
@@ -351,37 +384,45 @@ header {
       }
     }
   }
+
   .search.open {
     width: 100%;
     border: none;
-    @include transition-delay(.1s);
+    @include transition-delay(0.1s);
+
     &:after {
       width: 0px;
       @include transition-delay(0s);
     }
-    >input {
+
+    > input {
       position: absolute;
-      padding: .5rem 2.5rem .5rem .5rem;
+      padding: 0.5rem 2.5rem 0.5rem 0.5rem;
       line-height: 1rem;
       // background: $light-dark;
       opacity: 1;
-      @include transition-delay(.05s);
+      @include transition-delay(0.05s);
     }
-    >.eks {
+
+    > .eks {
       right: 10px;
-      &:before, &:after {
+
+      &:before,
+      &:after {
         width: 15px;
       }
+
       &:before {
         top: 2px;
         right: 0;
-        @include transition-delay(.25s);
+        @include transition-delay(0.25s);
       }
+
       &:after {
         right: 10px;
         bottom: 2px;
         width: 8px;
-        @include transition-delay(.3s);
+        @include transition-delay(0.3s);
       }
     }
   }

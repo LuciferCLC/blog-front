@@ -4,24 +4,24 @@
     <h1 class="title">
       {{ error.statusCode }}
     </h1>
-    <nuxt-link class="button" to="/" v-if="error.statusCode === 404" />
+    <nuxt-link v-if="error.statusCode === 404" class="button" to="/">
+    </nuxt-link>
   </section>
 </template>
-
 <script>
 export default {
   props: ['error'],
 
   transition: 'fade',
 
-  mounted () {
-    this.$store.commit('options/SET_ERROR_PAGE', true)
+  mounted() {
+    this.$store.commit('options/SET_ERROR_PAGE', true);
   },
 
-  beforeDestroy () {
-    this.$store.commit('options/SET_ERROR_PAGE', false)
+  beforeDestroy() {
+    this.$store.commit('options/SET_ERROR_PAGE', false);
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -35,13 +35,11 @@ export default {
   margin-top: 15px;
   font-size: 5em;
 }
-
 .info {
   font-weight: 300;
   color: #9aabb1;
   margin: 0;
 }
-
 .button {
   margin-top: 50px;
 }

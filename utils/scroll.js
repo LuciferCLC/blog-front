@@ -1,26 +1,26 @@
-const BezierEasing = require('bezier-easing')
+const BezierEasing = require('bezier-easing');
 
 const _ = {
-  $ (selector) {
-    return document.querySelector(selector)
+  $(selector) {
+    return document.querySelector(selector);
   },
-  on (element, events, handler) {
+  on(element, events, handler) {
     if (!Array.isArray(events)) {
-      events = [events]
+      events = [events];
     }
-    events.forEach((event) => {
-      element.addEventListener(event, handler, { passive: true })
-    })
+    events.forEach(event => {
+      element.addEventListener(event, handler, { passive: true });
+    });
   },
-  off (element, events, handler) {
+  off(element, events, handler) {
     if (!Array.isArray(events)) {
-      events = [events]
+      events = [events];
     }
-    events.forEach((event) => {
-      element.removeEventListener(event, handler)
-    })
+    events.forEach(event => {
+      element.removeEventListener(event, handler);
+    });
   }
-}
+};
 
 export const Easing = {
   ease: [0.25, 0.1, 0.25, 1.0],
@@ -28,17 +28,17 @@ export const Easing = {
   'ease-in': [0.42, 0.0, 1, 1.0],
   'ease-out': [0, 0.0, 0.58, 1.0],
   'ease-in-out': [0.42, 0.0, 0.58, 1.0]
-}
+};
 
 export const scrollTo = (element, duration = 500, options) => {
-  options = options || {}
-  options.easing = Easing.ease
+  options = options || {};
+  options.easing = Easing.ease;
 
   if (typeof element === 'string') {
-    element = _.$(element)
+    element = _.$(element);
   }
 
-  const page = _.$('html, body')
+  const page = _.$('html, body');
   const events = [
     'scroll',
     'mousedown',
@@ -47,62 +47,63 @@ export const scrollTo = (element, duration = 500, options) => {
     'mousewheel',
     'keyup',
     'touchmove'
-  ]
+  ];
 
-  let abort = false
+  let abort = false;
 
   const abortFn = function () {
-    abort = true
-  }
+    abort = true;
+  };
 
-  _.on(page, events, abortFn)
+  _.on(page, events, abortFn);
 
-  let elementY = 0
-  const initialY = window.pageYOffset
+  let elementY = 0;
+  const initialY = window.pageYOffset;
   if (Object.is(typeof element, 'number')) {
-    elementY = element
+    elementY = element;
   } else {
-    elementY = initialY + element.getBoundingClientRect().top
+    elementY = initialY + element.getBoundingClientRect().top;
   }
 
-  let targetY = document.body.scrollHeight - elementY < window.innerHeight
-    ? document.body.scrollHeight - window.innerHeight
-    : elementY
+  let targetY =
+    document.body.scrollHeight - elementY < window.innerHeight
+      ? document.body.scrollHeight - window.innerHeight
+      : elementY;
 
   if (options.offset) {
-    targetY += options.offset
+    targetY += options.offset;
   }
 
-  const diff = targetY - initialY
-  const easing = Reflect.apply(BezierEasing, BezierEasing, options.easing)
-  let start
+  const diff = targetY - initialY;
+  const easing = Reflect.apply(BezierEasing, BezierEasing, options.easing);
+  let start;
 
   const done = function () {
-    _.off(page, events, abortFn)
+    _.off(page, events, abortFn);
     if (abort && options.onCancel) {
-      options.onCancel()
+      options.onCancel();
     }
     if (!abort && options.onDone) {
-      options.onDone()
+      options.onDone();
     }
-  }
+  };
 
-  if (!diff) return
+  if (!diff) return;
 
-  window.requestAnimationFrame(function step (timestamp) {
-    if (abort) return done()
-    if (!start) start = timestamp
+  window.requestAnimationFrame(function step(timestamp) {
+    if (abort) return done();
+    if (!start) start = timestamp;
 
-    const time = timestamp - start
-    let progress = Math.min(time / duration, 1)
-    progress = easing(progress)
+    const time = timestamp - start;
+    let progress = Math.min(time / duration, 1);
+    progress = easing(progress);
 
-    window.scrollTo(0, initialY + diff * progress)
+    window.scrollTo(0, initialY + diff * progress);
 
     if (time < duration) {
-      window.requestAnimationFrame(step)
+      window.requestAnimationFrame(step);
     } else {
-      done()
+      done();
     }
-  })
-}
+  });
+};

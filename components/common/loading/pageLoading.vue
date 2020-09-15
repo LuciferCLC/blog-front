@@ -1,12 +1,11 @@
 <template>
-  <div class="page-loading" v-show="loading">
-    <LoadingTemplate />
+  <div v-if="loading" class="page-loading">
+    <LoadingTemplate></LoadingTemplate>
   </div>
 </template>
 
 <script>
 import LoadingTemplate from './index';
-
 export default {
   components: {
     LoadingTemplate
@@ -15,24 +14,24 @@ export default {
   data() {
     return {
       loading: false
-    }
+    };
   },
 
   methods: {
     start() {
-      this.loading = true
-      this.$store.commit('options/LOADING_CHANGE', true)
+      this.loading = true;
+      this.$store.commit('options/LOADING_CHANGE', true);
     },
     finish() {
-      this.loading = false
-      this.$store.commit('options/LOADING_CHANGE', false)
+      this.loading = false;
+      this.$store.commit('options/LOADING_CHANGE', false);
     },
     fail() {
-      this.loading = false
-      this.$store.commit('options/LOADING_CHANGE', false)
+      this.loading = false;
+      this.$store.commit('options/LOADING_CHANGE', false);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -48,4 +47,3 @@ export default {
   margin-left: 4px;
 }
 </style>
-

@@ -1,28 +1,32 @@
 <template>
   <transition name="fade">
-    <div class="dialog" v-show="dialogVisible" :class="{'dialog-mobile': mobileLayout}">
+    <div
+      v-show="dialogVisible"
+      class="dialog"
+      :class="{ 'dialog-mobile': mobileLayout }"
+    >
       <transition name="slide-down">
-        <div class="dialog-body" v-show="dialogVisible" v-click-outside="hide">
+        <div v-show="dialogVisible" v-click-outside="hide" class="dialog-body">
           <div class="dialog-head">
-            <a href="javascript:;" @click="hide">
-              <i class="iconfont icon-close" />
-            </a>
+            <a href="javascript:;" @click="hide"
+              ><i class="iconfont icon-close"></i
+            ></a>
           </div>
           <div class="dialog-content">
-            <slot />
-            <LoadingComponent v-show="loading" />
+            <slot></slot>
+            <LoadingComponent v-show="loading"></LoadingComponent>
             <img
+              v-if="img"
+              v-show="!loading"
+              v-click-outside="hide"
               :src="img"
               alt=""
-              v-if="img"
               class="close"
-              v-click-outside="hide"
               @click="hide"
-              v-show="!loading"
             />
           </div>
           <div class="dialog-foot">
-            <slot name="foot" />
+            <slot name="foot"></slot>
           </div>
         </div>
       </transition>
@@ -31,19 +35,10 @@
 </template>
 
 <script>
-import LoadingComponent from './loading/index'
+import LoadingComponent from './loading/index.vue';
 
 export default {
   name: 'Mdialog',
-
-  data () {
-    return {
-      back: {
-        height: '',
-        overflow: ''
-      }
-    }
-  },
 
   components: {
     LoadingComponent
@@ -51,35 +46,47 @@ export default {
 
   props: ['visible', 'img', 'loading'],
 
+  data() {
+    return {
+      back: {
+        height: '',
+        overflow: ''
+      }
+    };
+  },
+
   computed: {
-    dialogVisible () {
-      if (this.visible) this.lockBody()
-      else this.unLockBody()
-      return this.visible
+    dialogVisible() {
+      if (this.visible) this.lockBody();
+      else this.unLockBody();
+      return this.visible;
     },
-    mobileLayout () {
-      return this.$store.state.options.mobileLayout
+
+    mobileLayout() {
+      return this.$store.state.options.mobileLayout;
     }
   },
 
   methods: {
-    lockBody () {
-      this.back.height = document.body.style.height
-      this.back.overflow = document.body.style.overflow
-      document.body.style.height = '100%'
-      document.body.style.overflow = 'hidden'
+    lockBody() {
+      this.back.height = document.body.style.height;
+      this.back.overflow = document.body.style.overflow;
+      document.body.style.height = '100%';
+      document.body.style.overflow = 'hidden';
     },
-    unLockBody () {
-      if (typeof window === 'undefined') return
-      document.body.style.height = this.back.height
-      document.body.style.overflow = this.back.overflow
+
+    unLockBody() {
+      if (typeof window === 'undefined') return;
+      document.body.style.height = this.back.height;
+      document.body.style.overflow = this.back.overflow;
     },
-    hide () {
-      this.unLockBody()
-      this.$emit('update:visible', false)
+
+    hide() {
+      this.unLockBody();
+      this.$emit('update:visible', false);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -91,7 +98,8 @@ export default {
   right: 0;
   background: $secondary;
   z-index: 999;
-  >.dialog-body {
+
+  > .dialog-body {
     position: absolute;
     left: calc(50% - 17rem);
     top: 10rem;
@@ -99,20 +107,24 @@ export default {
     // height: 24rem;
     padding: 1rem;
     background: $white;
-    @include border-radius(.5rem);
-    box-shadow: 0px 8px 46px rgba(0, 0, 0, 0.08), 0px 2px 6px rgba(0, 0, 0, 0.03);
-    >.dialog-head {
+    @include border-radius(0.5rem);
+    box-shadow: 0px 8px 46px rgba(0, 0, 0, 0.08),
+      0px 2px 6px rgba(0, 0, 0, 0.03);
+
+    > .dialog-head {
       position: relative;
       text-align: right;
       z-index: 2;
       color: $red;
+
       .iconfont {
         font-size: 1.3rem;
       }
     }
   }
+
   &.dialog-mobile {
-    >.dialog-body {
+    > .dialog-body {
       width: 24rem;
       top: 4rem;
       left: calc(50% - 12rem);

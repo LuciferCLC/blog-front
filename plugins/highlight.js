@@ -1,26 +1,38 @@
-const Hljs = require('highlight.js/lib/highlight')
+const hljs = require('highlight.js/lib/core');
 
-Hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'))
-Hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'))
-Hljs.registerLanguage('bash', require('highlight.js/lib/languages/bash'))
-Hljs.registerLanguage('coffeescript', require('highlight.js/lib/languages/coffeescript'))
-Hljs.registerLanguage('css', require('highlight.js/lib/languages/css'))
-Hljs.registerLanguage('markdown', require('highlight.js/lib/languages/markdown'))
-Hljs.registerLanguage('http', require('highlight.js/lib/languages/http'))
-Hljs.registerLanguage('java', require('highlight.js/lib/languages/java'))
-Hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'))
-Hljs.registerLanguage('json', require('highlight.js/lib/languages/json'))
-Hljs.registerLanguage('less', require('highlight.js/lib/languages/less'))
-Hljs.registerLanguage('makefile', require('highlight.js/lib/languages/makefile'))
-Hljs.registerLanguage('nginx', require('highlight.js/lib/languages/nginx'))
-Hljs.registerLanguage('php', require('highlight.js/lib/languages/php'))
-Hljs.registerLanguage('python', require('highlight.js/lib/languages/python'))
-Hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss'))
-Hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
-Hljs.registerLanguage('stylus', require('highlight.js/lib/languages/stylus'))
+hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'));
+hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
+hljs.registerLanguage('bash', require('highlight.js/lib/languages/bash'));
+hljs.registerLanguage(
+  'coffeescript',
+  require('highlight.js/lib/languages/coffeescript')
+);
+hljs.registerLanguage('css', require('highlight.js/lib/languages/css'));
+hljs.registerLanguage(
+  'markdown',
+  require('highlight.js/lib/languages/markdown')
+);
+hljs.registerLanguage('http', require('highlight.js/lib/languages/http'));
+hljs.registerLanguage('java', require('highlight.js/lib/languages/java'));
+hljs.registerLanguage(
+  'javascript',
+  require('highlight.js/lib/languages/javascript')
+);
+hljs.registerLanguage('json', require('highlight.js/lib/languages/json'));
+hljs.registerLanguage('less', require('highlight.js/lib/languages/less'));
+hljs.registerLanguage(
+  'makefile',
+  require('highlight.js/lib/languages/makefile')
+);
+hljs.registerLanguage('nginx', require('highlight.js/lib/languages/nginx'));
+hljs.registerLanguage('php', require('highlight.js/lib/languages/php'));
+hljs.registerLanguage('python', require('highlight.js/lib/languages/python'));
+hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss'));
+hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'));
+hljs.registerLanguage('stylus', require('highlight.js/lib/languages/stylus'));
 
-Hljs.configure({
+hljs.configure({
   classPrefix: '' // don't append class prefix
-})
+});
 
-module.exports = Hljs
+module.exports = hljs;

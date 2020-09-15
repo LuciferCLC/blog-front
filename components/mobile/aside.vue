@@ -2,47 +2,43 @@
   <div class="mobile-aside">
     <div class="user-head">
       <img :src="user.gravatar + '?imageView2/1/w/200/h/200'" />
-      <p>Nolan</p>
-      <p @click="toogleTheme" class="scoll-btn theme">
+      <p>三毛</p>
+
+      <p class="scoll-btn theme" @click="toogleTheme">
         <i
           class="iconfont"
           :class="{
             'icon-dark': theme === 'light',
             'icon-light': theme === 'dark'
           }"
-        />
+        ></i>
       </p>
     </div>
-      <nav>
-        <li
-          v-for="(list, index) in nav"
-          :key="index"
-          class="nav-list"
-        >
-          <nuxt-link :to="list.path" exact>
-            <span>{{ list.name }}</span>
-          </nuxt-link>
-        </li>
-      </nav>
-      <div class="aside-foot">
-        <p class="mune">
-          <nuxt-link to="/about">我</nuxt-link>
-          <span class="hr" />
-          <nuxt-link to="/about">朋友</nuxt-link>
-          <span class="hr" />
-          <nuxt-link to="/wall">留言墙</nuxt-link>
-          <span class="hr" />
-          <nuxt-link to="/sitemap">归档</nuxt-link>
-        </p>
-      </div>
+    <nav>
+      <li v-for="(list, index) in nav" :key="index" class="nav-list">
+        <nuxt-link :to="list.path" exact>
+          <span>{{ list.name }}</span>
+        </nuxt-link>
+      </li>
+    </nav>
+    <div class="aside-foot">
+      <p class="mune">
+        <nuxt-link to="/about">我</nuxt-link>
+        <span class="hr"></span>
+        <nuxt-link to="/about">朋友</nuxt-link>
+        <span class="hr"></span>
+        <nuxt-link to="/wall">留言墙</nuxt-link>
+        <span class="hr"></span>
+        <nuxt-link to="/sitemap">归档</nuxt-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'mobile-aside',
-
-  data () {
+  name: 'MobileAside',
+  data() {
     return {
       nav: [
         // { path: '/', name: '首 页', icon: 'iconfont icon-home'},
@@ -51,46 +47,52 @@ export default {
         { path: '/fuck', name: '民 谣', icon: 'iconfont icon-read' }
       ],
       theme: 'light'
-    }
+    };
   },
 
   computed: {
-    user () {
-      return this.$store.state.options.adminInfo
+    user() {
+      return this.$store.state.options.adminInfo;
     }
+  },
+
+  mounted() {
+    this.theme = window.localStorage.getItem('THEME') || 'light';
   },
 
   methods: {
-    toogleTheme () {
-      const isLight = document.body.id === 'light'
-      this.theme = isLight ? 'dark' : 'light'
-      document.body.id = this.theme
-      window.localStorage.setItem('THEME', this.theme)
-    }
-  },
+    toogleTheme() {
+      const isLight = document.body.id === 'light';
 
-  mounted () {
-    this.theme = window.localStorage.getItem('THEME') || 'light'
+      this.theme = isLight ? 'dark' : 'light';
+
+      document.body.id = this.theme;
+      window.localStorage.setItem('THEME', this.theme);
+    }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 .mobile-aside {
   position: relative;
   height: 100%;
-  >.user-head {
+
+  > .user-head {
     padding: 3.5rem 1rem 1rem 1rem;
     text-align: center;
-    >img {
+
+    > img {
       border-radius: 50%;
       width: 8rem;
     }
-    >p {
+
+    > p {
       margin-top: $mlg-pad;
       color: $black;
       font-size: 1.6rem;
     }
+
     .scoll-btn {
       display: block;
       margin-top: 2rem;
@@ -98,6 +100,7 @@ export default {
       line-height: 2rem;
       color: $black;
       cursor: pointer;
+
       i {
         font-size: $font-size-large;
       }
@@ -111,19 +114,23 @@ export default {
     }
     a {
       margin-right: 0rem;
-      padding: .5rem;
+      padding: 0.5rem;
       color: $descript;
+
       i {
-        margin-right: .8rem;
+        margin-right: 0.8rem;
       }
+
       &:hover {
         color: $black;
       }
     }
+
     a.link-active {
       color: $black;
     }
   }
+
   > .aside-foot {
     position: absolute;
     bottom: $mlg-pad;

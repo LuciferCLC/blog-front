@@ -2,79 +2,83 @@
   <header class="mobile-head">
     <form
       class="search"
-      :class="{'active': search}"
+      :class="{ active: search }"
       @submit.stop.prevent="searchTo"
     >
       <input
+        v-model="keyword"
         type="text"
         placeholder="Search"
-        v-model="keyword"
-        @keyup.enter.stop.prevent="searchTo"
         required
         :maxlength="20"
+        @keyup.enter.stop.prevent="searchTo"
       />
+
       <a href="javascript:;" @click="close">
-        <i class="iconfont icon-close" />
+        <i class="iconfont icon-close"></i>
       </a>
     </form>
     <nav>
       <div>
-        <a href="javascript:;" @click.stop.prevent="toggleSidebar(!mobileSidebar)">
-          <i class="iconfont icon-list" />
-        </a>
+        <a
+          href="javascript:;"
+          @click.stop.prevent="toggleSidebar(!mobileSidebar)"
+          ><i class="iconfont icon-list"></i
+        ></a>
       </div>
       <div class="name">
         <nuxt-link to="/">
-          <img src="~/static/images/logo.png" alt="" width="30">
+          <img src="~/static/images/logo.png" alt="" width="30" />
         </nuxt-link>
       </div>
       <div>
-        <a href="javascript:;" @click.stop.prevent="search = !search">
-          <i class="iconfont icon-search" />
-        </a>
+        <a href="javascript:;" @click.stop.prevent="search = !search"
+          ><i class="iconfont icon-search"></i
+        ></a>
       </div>
     </nav>
   </header>
 </template>
-
 <script>
 export default {
-  name: 'mobile-head',
+  name: 'MobileHead',
 
-  data () {
+  data() {
     return {
       search: false,
       keyword: ''
+    };
+  },
+
+  computed: {
+    mobileSidebar() {
+      return this.$store.state.options.mobileSidebar;
     }
   },
 
   watch: {
-    '$route' (newVel, oldVel) {
-      this.search = false
-      this.toggleSidebar(false)
-    }
-  },
-
-  computed: {
-    mobileSidebar () {
-      return this.$store.state.options.mobileSidebar
+    $route(newVel, oldVel) {
+      this.search = false;
+      this.toggleSidebar(false);
     }
   },
 
   methods: {
-    toggleSidebar (state) {
-      this.$store.commit('options/SET_MOBILE_SIDEBAR', state)
+    toggleSidebar(state) {
+      this.$store.commit('options/SET_MOBILE_SIDEBAR', state);
     },
-    searchTo () {
-      this.$router.push(`/search/${this.keyword}`)
+
+    searchTo() {
+      this.$router.push(`/search/${this.keyword}`);
       // this.keyword = ''
     },
-    close () {
-      this.keyword = ''
-      this.search = false
+
+    close() {
+      this.keyword = '';
+      this.search = false;
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -85,18 +89,21 @@ export default {
   z-index: 999;
   width: 100%;
   padding: 0 1rem;
-  height: $header-height - .5;
-  line-height: $header-height - .5 ;
+  height: $header-height - 0.5;
+  line-height: $header-height - 0.5;
   background: $white;
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  >nav {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  > nav {
     display: flex;
     justify-content: space-between;
-    >.name {
+
+    > .name {
       font-size: $font-size-large;
       color: $black;
     }
   }
+
   .search {
     display: flex;
     align-items: center;
@@ -110,10 +117,12 @@ export default {
     background: $white;
     z-index: 999;
     @include css3-prefix('transform', 'translateY(-100%)');
+
     &.active {
       transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
       @include css3-prefix('transform', 'translateY(0)');
     }
+
     input {
       width: $container-right;
       height: 2rem;
